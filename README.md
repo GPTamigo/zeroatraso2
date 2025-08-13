@@ -19,7 +19,7 @@ O projeto foi desenvolvido como um exercício prático para demonstrar a criaç�
 
 ## Como Executar o Projeto
 1.  Abra o Visual Studio Code.
-2.  Arraste e solte a pasta `zeroatraso` para dentro do VS Code.
+2.  Arraste e solte a pasta `zeroatraso2` para dentro do VS Code.
 3.  Com a pasta aberta, clique com o botão direito no arquivo `index.html`.
 4.  Selecione "Open with Live Server" para visualizar o projeto no seu navegador.
     * **Nota:** Se você não tiver o Live Server instalado, pode simplesmente arrastar o arquivo `index.html` para a janela do seu navegador.
