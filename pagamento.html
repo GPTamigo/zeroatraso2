@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento - ZeroAtraso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ZeroAtraso</h1>
+            <p>Checkout Seguro</p>
+        </div>
+    </header>
+    <main class="payment-main">
+        <div class="container">
+            <div class="payment-container">
+                <div class="payment-left">
+                    <h2>Resumo do Pedido</h2>
+                    <div class="order-summary">
+                        <div class="order-item">
+                            <span>Plano Autônomo (Mensal)</span>
+                            <span class="price">R$ 29,99</span>
+                        </div>
+                        <div class="order-divider"></div>
+                        <div class="order-total">
+                            <span>Total</span>
+                            <span class="price-total">R$ 29,99</span>
+                        </div>
+                    </div>
+                    <div class="security-info">
+                        <h3>🔒 Pagamento Seguro</h3>
+                        <ul>
+                            <li>✅ Criptografia SSL/TLS</li>
+                            <li>✅ Dados protegidos</li>
+                            <li>✅ Certificação PCI-DSS</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="payment-right">
+                    <h2>Escolha a Forma de Pagamento</h2>
+                    <div class="payment-methods">
+                        <div class="payment-method active" id="pixMethod">
+                            <div class="method-header">
+                                <span class="method-icon">📱</span>
+                                <h3>PIX</h3>
+                                <span class="method-badge">Aprovação Imediata</span>
+                            </div>
+                        </div>
+                        <div class="payment-method" id="creditMethod">
+                            <div class="method-header">
+                                <span class="method-icon">💳</span>
+                                <h3>Cartão de Crédito</h3>
+                                <span class="method-badge">Parcelamento disponível</span>
+                            </div>
+                        </div>
+                        <div class="payment-method" id="mercadoPagoMethod">
+                            <div class="method-header">
+                                <span class="method-icon">
+                                    <img src="https://http2.mlstatic.com/storage/logos-api-admin/a5f047d0-9be0-11ec-aad4-c3381f368aaf-m.svg" alt="Mercado Pago" style="width: 80px; height: auto;">
+                                </span>
+                                <h3>Mercado Pago</h3>
+                                <span class="method-badge">Seguro e Rápido</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pixForm" class="payment-form active-form">
+                        <h3>Pagamento via PIX</h3>
+                        <div class="pix-instructions">
+                            <p><strong>Como pagar:</strong></p>
+                            <ol>
+                                <li>Abra o app do seu banco</li>
+                                <li>Escolha pagar com PIX</li>
+                                <li>Escaneie o QR Code ou copie o código</li>
+                                <li>Confirme o pagamento</li>
+                            </ol>
+                        </div>
+                        <div class="pix-qrcode">
+                            <div class="qr-placeholder">
+                                <p>QR Code será gerado após confirmação</p>
+                                <div class="qr-code-demo">
+                                    <svg width="200" height="200" viewBox="0 0 200 200">
+                                        <rect width="200" height="200" fill="#fff"/>
+                                        <rect x="20" y="20" width="60" height="60" fill="#000"/>
+                                        <rect x="120" y="20" width="60" height="60" fill="#000"/>
+                                        <rect x="20" y="120" width="60" height="60" fill="#000"/>
+                                        <rect x="30" y="30" width="40" height="40" fill="#fff"/>
+                                        <rect x="130" y="30" width="40" height="40" fill="#fff"/>
+                                        <rect x="30" y="130" width="40" height="40" fill="#fff"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="pix-code">
+                                <input type="text" value="00020126580014BR.GOV.BCB.PIX..." readonly>
+                                <button class="btn-copy">Copiar Código</button>
+                            </div>
+                        </div>
+                        <button class="btn-pay" onclick="alert('Integração PIX em desenvolvimento. Será conectado ao Mercado Pago.')">Gerar QR Code PIX</button>
+                    </div>
+                    <div id="creditForm" class="payment-form">
+                        <h3>Dados do Cartão</h3>
+                        <form>
+                            <div class="form-group">
+                                <label>Número do Cartão</label>
+                                <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+                            </div>
+                            <div class="form-group">
+                                <label>Nome no Cartão</label>
+                                <input type="text" placeholder="Nome como está no cartão">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Validade</label>
+                                    <input type="text" placeholder="MM/AA" maxlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV</label>
+                                    <input type="text" placeholder="000" maxlength="4">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Parcelas</label>
+                                <select>
+                                    <option>1x de R$ 29,99 sem juros</option>
+                                    <option>2x de R$ 15,00 sem juros</option>
+                                    <option>3x de R$ 10,00 sem juros</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn-pay" onclick="alert('Integração de cartão em desenvolvimento. Será processado via Mercado Pago.')">Finalizar Pagamento</button>
+                        </form>
+                    </div>
+                    <div id="mercadoPagoForm" class="payment-form">
+                        <h3>Mercado Pago</h3>
+                        <div class="mercadopago-info">
+                            <p>🔒 <strong>Pagamento 100% seguro</strong></p>
+                            <p>Você será redirecionado para o Mercado Pago para completar o pagamento de forma segura.</p>
+                            <div class="mp-benefits">
+                                <ul>
+                                    <li>✅ Use saldo do Mercado Pago</li>
+                                    <li>✅ Parcele em até 12x</li>
+                                    <li>✅ PIX, Cartão ou Boleto</li>
+                                    <li>✅ Proteção ao comprador</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="btn-pay btn-mercadopago" onclick="alert('Integração Mercado Pago em desenvolvimento.\n\nSua conta Mercado Pago será configurada em:\nINTEGRACAO.md - Seção Mercado Pago')">
+                            <img src="https://http2.mlstatic.com/storage/logos-api-admin/a5f047d0-9be0-11ec-aad4-c3381f368aaf-m.svg" alt="Mercado Pago" style="height: 20px; margin-right: 10px;">
+                            Pagar com Mercado Pago
+                        </button>
+                    </div>
+                    <div class="payment-contact">
+                        <p><strong>Precisa de ajuda?</strong></p>
+                        <p>WhatsApp: +55 (88) 9.9764-0012</p>
+                        <p>Email: melhormais12@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ZeroAtraso. Todos os direitos reservados a mais12.com.</p>
+        </div>
+    </footer>
+    <script>
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+                document.querySelectorAll('.payment-form').forEach(f => f.classList.remove('active-form'));
+                
+                this.classList.add('active');
+                
+                if(this.id === 'pixMethod') {
+                    document.getElementById('pixForm').classList.add('active-form');
+                } else if(this.id === 'creditMethod') {
+                    document.getElementById('creditForm').classList.add('active-form');
+                } else if(this.id === 'mercadoPagoMethod') {
+                    document.getElementById('mercadoPagoForm').classList.add('active-form');
+                }
+            });
+        });
+
+        document.querySelector('.btn-copy').addEventListener('click', function() {
+            const input = document.querySelector('.pix-code input');
+            input.select();
+            document.execCommand('copy');
+            this.textContent = 'Copiado!';
+            setTimeout(() => {
+                this.textContent = 'Copiar Código';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

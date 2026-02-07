@@ -1,8 +1,143 @@
 # Guia de Integração - ZeroAtraso
 
+## 🆕 Novidades Adicionadas
+
+### ✅ Dashboard de Clientes Consumidores
+- **Arquivo:** `dashboard-cliente.html`
+- **Recursos:** Perfil, compras, favoritos, formas de pagamento
+- **Benefício:** Cadastro 100% gratuito e ilimitado
+
+### ✅ Sistema de Pagamentos
+- **Arquivo:** `pagamento.html`
+- **Formas de pagamento:** PIX, Cartão de Crédito, Mercado Pago
+- **Status:** Interface completa (integração pendente)
+
+---
+
 ## Funcionalidades Pendentes de Implementação
 
-### 1. Reconhecimento Facial
+### 1. 💳 Integração com Mercado Pago (PRIORITÁRIO)
+
+**Status Atual:** Interface de pagamento criada, integração pendente
+
+**Sua Conta Mercado Pago:**
+Para receber pagamentos, você precisa criar e configurar sua conta:
+
+1. **Criar Conta Mercado Pago:**
+   - Acesse: https://www.mercadopago.com.br
+   - Cadastre-se como **Vendedor**
+   - Valide sua identidade (CPF/CNPJ)
+   - Configure sua conta bancária para recebimentos
+
+2. **Obter Credenciais:**
+   - Acesse: https://www.mercadopago.com.br/developers
+   - Vá em "Suas integrações" → "Criar aplicação"
+   - Anote suas credenciais:
+     - **Public Key** (chave pública - usar no frontend)
+     - **Access Token** (chave privada - usar no backend)
+
+**Implementação - Mercado Pago Checkout Pro:**
+
+```javascript
+// Instalar SDK
+npm install @mercadopago/sdk-js
+
+// Configurar no frontend (pagamento.html)
+const mp = new MercadoPago('SUA_PUBLIC_KEY', {
+  locale: 'pt-BR'
+});
+
+// Criar preferência de pagamento (backend Node.js)
+const mercadopago = require('mercadopago');
+mercadopago.configure({
+  access_token: 'SEU_ACCESS_TOKEN'
+});
+
+const preference = {
+  items: [
+    {
+      title: 'Plano Autônomo - ZeroAtraso',
+      unit_price: 29.99,
+      quantity: 1,
+    }
+  ],
+  back_urls: {
+    success: 'https://seusite.com/sucesso',
+    failure: 'https://seusite.com/falha',
+    pending: 'https://seusite.com/pendente'
+  },
+  auto_return: 'approved',
+  payment_methods: {
+    excluded_payment_types: [],
+    installments: 12
+  }
+};
+
+mercadopago.preferences.create(preference)
+  .then(response => {
+    // response.body.init_point = URL do checkout
+    console.log(response.body);
+  });
+```
+
+**Implementação - PIX via Mercado Pago:**
+
+```javascript
+// Gerar pagamento PIX
+const payment = {
+  transaction_amount: 29.99,
+  description: 'Plano Autônomo - ZeroAtraso',
+  payment_method_id: 'pix',
+  payer: {
+    email: 'cliente@email.com',
+  }
+};
+
+mercadopago.payment.create(payment)
+  .then(response => {
+    // response.body.point_of_interaction.transaction_data
+    // Contém: qr_code_base64, qr_code (texto)
+    const pixQR = response.body.point_of_interaction.transaction_data.qr_code_base64;
+    const pixCode = response.body.point_of_interaction.transaction_data.qr_code;
+  });
+```
+
+**Webhooks (Notificações de Pagamento):**
+
+```javascript
+// Configurar endpoint para receber notificações
+app.post('/webhook/mercadopago', (req, res) => {
+  const { type, data } = req.body;
+  
+  if (type === 'payment') {
+    const paymentId = data.id;
+    
+    mercadopago.payment.get(paymentId)
+      .then(payment => {
+        if (payment.body.status === 'approved') {
+          // Pagamento aprovado - ativar assinatura do cliente
+          console.log('Pagamento aprovado!');
+        }
+      });
+  }
+  
+  res.sendStatus(200);
+});
+```
+
+**Recursos Oficiais:**
+- Documentação: https://www.mercadopago.com.br/developers/pt/docs
+- SDK JavaScript: https://github.com/mercadopago/sdk-js
+- SDK Node.js: https://github.com/mercadopago/sdk-nodejs
+
+**Taxas Mercado Pago (referência 2025):**
+- PIX: ~0,99% por transação
+- Cartão de Crédito: ~3,99% + R$ 0,40
+- Boleto: ~R$ 3,49 por boleto
+
+---
+
+### 2. Reconhecimento Facial
 
 **Status Atual:** Apenas exemplo visual (botões simulados)
 
@@ -17,7 +152,7 @@
 
 ---
 
-### 2. Leitura de Códigos (QR Code e Código de Barras)
+### 3. Leitura de Códigos (QR Code e Código de Barras)
 
 **Status Atual:** Funcionalidade apenas mencionada
 
@@ -32,7 +167,7 @@
 
 ---
 
-### 3. Integração com Supabase
+### 4. Integração com Supabase
 
 **Serviços a Implementar:**
 - **Autenticação:** `supabase.auth.signUp()`, `supabase.auth.signIn()`
@@ -54,7 +189,7 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 ---
 
-### 4. Integração com Firebase (Alternativa)
+### 5. Integração com Firebase (Alternativa)
 
 **Serviços a Implementar:**
 - **Firebase Authentication:** Suporte para email/senha e biometria

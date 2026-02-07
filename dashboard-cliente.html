@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cliente - ZeroAtraso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ZeroAtraso</h1>
+            <nav class="dashboard-nav">
+                <a href="index.html">Início</a>
+                <a href="#" class="active">Meu Perfil</a>
+                <a href="#" onclick="alert('Funcionalidade em desenvolvimento')">Minhas Compras</a>
+                <a href="#" onclick="alert('Funcionalidade em desenvolvimento')">Sair</a>
+            </nav>
+        </div>
+    </header>
+    <main class="dashboard-main">
+        <div class="container">
+            <div class="welcome-banner">
+                <h2>Bem-vindo(a), Cliente!</h2>
+                <p>Cadastro 100% gratuito e ilimitado para clientes de comerciantes parceiros</p>
+            </div>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-icon">👤</div>
+                    <h3>Meu Perfil</h3>
+                    <p>Nome: João Silva (exemplo)</p>
+                    <p>Email: joao@exemplo.com</p>
+                    <p>CPF: 000.000.000-00</p>
+                    <button class="btn-dashboard" onclick="alert('Editar perfil - em desenvolvimento')">Editar Perfil</button>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">🛒</div>
+                    <h3>Minhas Compras</h3>
+                    <p>Total de compras: 0</p>
+                    <p>Última compra: -</p>
+                    <p>Status: Cliente Novo</p>
+                    <button class="btn-dashboard" onclick="alert('Histórico - em desenvolvimento')">Ver Histórico</button>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">🏪</div>
+                    <h3>Comerciantes Favoritos</h3>
+                    <p>Nenhum favorito ainda</p>
+                    <button class="btn-dashboard" onclick="alert('Explorar comerciantes - em desenvolvimento')">Explorar</button>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">💳</div>
+                    <h3>Formas de Pagamento</h3>
+                    <p>PIX cadastrado: Não</p>
+                    <p>Cartões salvos: 0</p>
+                    <button class="btn-dashboard" id="openPaymentModal">Adicionar Pagamento</button>
+                </div>
+                <div class="dashboard-card highlight-card">
+                    <div class="card-icon">🎁</div>
+                    <h3>Benefícios</h3>
+                    <p>🎉 Cadastro GRÁTIS para sempre!</p>
+                    <p>💰 Sem taxas para clientes</p>
+                    <p>🏆 Programa "Indique e Ganhe"</p>
+                    <button class="btn-dashboard btn-success">Indicar Amigos</button>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">🔒</div>
+                    <h3>Segurança</h3>
+                    <p>Reconhecimento Facial: Inativo</p>
+                    <p>Autenticação 2FA: Inativo</p>
+                    <button class="btn-dashboard" onclick="alert('Configurar segurança - em desenvolvimento')">Configurar</button>
+                </div>
+            </div>
+            <div class="info-section">
+                <h3>ℹ️ Informações Importantes</h3>
+                <ul>
+                    <li>✅ Seu cadastro é 100% gratuito e sem mensalidades</li>
+                    <li>✅ Você só paga pelos produtos/serviços que comprar</li>
+                    <li>✅ Seus dados são protegidos com criptografia de ponta</li>
+                    <li>✅ Aceitamos PIX, Cartão de Crédito/Débito e Transferência</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ZeroAtraso. Todos os direitos reservados a mais12.com.</p>
+        </div>
+    </footer>
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('paymentModal')">&times;</span>
+            <h3>Adicionar Forma de Pagamento</h3>
+            <p class="modal-info">Configure suas formas de pagamento para compras rápidas e seguras.</p>
+            <div class="payment-options">
+                <button class="payment-btn" onclick="alert('Integração com Mercado Pago em desenvolvimento')">
+                    <span>💳</span> Mercado Pago
+                </button>
+                <button class="payment-btn" onclick="alert('Cadastrar PIX em desenvolvimento')">
+                    <span>📱</span> PIX
+                </button>
+                <button class="payment-btn" onclick="alert('Cadastrar cartão em desenvolvimento')">
+                    <span>💳</span> Cartão de Crédito
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('openPaymentModal').addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal('paymentModal');
+        });
+    </script>
+</body>
+</html>
