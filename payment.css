@@ -254,15 +254,156 @@
     box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
+.payment-category {
+    margin-bottom: 2rem;
+}
+
+.category-title {
+    color: var(--heading-color);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.badge-purple { background-color: #820ad1; }
+.badge-blue { background-color: #00b0ff; }
+.badge-green { background-color: #11c76f; }
+.badge-orange { background-color: #ec7000; }
+.badge-red { background-color: #cc092f; }
+.badge-yellow { background-color: #fcd209; color: #333; }
+
+.bank-info {
+    background-color: #f0f8ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.bank-info ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.bank-info ul li {
+    padding: 0.5rem 0;
+    color: #0277bd;
+    font-weight: 500;
+}
+
+.bank-details {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.bank-details p {
+    margin: 0.5rem 0;
+    font-family: monospace;
+    font-size: 0.95rem;
+}
+
+.accepted-methods {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.accepted-methods h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.method-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.method-logos span {
+    background-color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+}
+
+.btn-nubank {
+    background-color: #820ad1;
+}
+
+.btn-nubank:hover {
+    background-color: #6a0ab0;
+}
+
 .btn-mercadopago {
     background-color: #00b0ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .btn-mercadopago:hover {
     background-color: #0091ea;
+}
+
+.btn-paypal {
+    background-color: #0070ba;
+}
+
+.btn-paypal:hover {
+    background-color: #005a92;
+}
+
+.btn-picpay {
+    background-color: #11c76f;
+}
+
+.btn-picpay:hover {
+    background-color: #0ea85c;
+}
+
+.btn-itau {
+    background-color: #ec7000;
+}
+
+.btn-itau:hover {
+    background-color: #d36400;
+}
+
+.btn-bradesco {
+    background-color: #cc092f;
+}
+
+.btn-bradesco:hover {
+    background-color: #a50726;
+}
+
+.btn-bb {
+    background-color: #fcd209;
+    color: #333;
+}
+
+.btn-bb:hover {
+    background-color: #e3bc08;
+}
+
+.btn-caixa {
+    background-color: #0066cc;
+}
+
+.btn-caixa:hover {
+    background-color: #0052a3;
+}
+
+.btn-santander {
+    background-color: #ec0000;
+}
+
+.btn-santander:hover {
+    background-color: #c00000;
 }
 
 .mercadopago-info {

@@ -137,6 +137,247 @@ app.post('/webhook/mercadopago', (req, res) => {
 
 ---
 
+### 1.1 💙 Integração com PayPal
+
+**Status:** Interface criada, integração pendente
+
+**Como configurar:**
+1. Criar conta: https://www.paypal.com/br/business
+2. Verificar conta (vincular banco)
+3. Obter credenciais: https://developer.paypal.com/dashboard/
+
+**Implementação - PayPal Checkout:**
+
+```javascript
+// Instalar SDK
+npm install @paypal/checkout-server-sdk
+
+// Configurar (backend Node.js)
+const paypal = require('@paypal/checkout-server-sdk');
+
+const environment = new paypal.core.LiveEnvironment(
+  'SEU_CLIENT_ID',
+  'SEU_SECRET'
+);
+const client = new paypal.core.PayPalHttpClient(environment);
+
+// Criar ordem
+async function createOrder() {
+  const request = new paypal.orders.OrdersCreateRequest();
+  request.prefer("return=representation");
+  request.requestBody({
+    intent: 'CAPTURE',
+    purchase_units: [{
+      amount: {
+        currency_code: 'BRL',
+        value: '29.99'
+      },
+      description: 'Plano Autônomo - ZeroAtraso'
+    }]
+  });
+
+  const order = await client.execute(request);
+  return order.result.id;
+}
+
+// Capturar pagamento
+async function captureOrder(orderId) {
+  const request = new paypal.orders.OrdersCaptureRequest(orderId);
+  const capture = await client.execute(request);
+  return capture.result;
+}
+```
+
+**Frontend (HTML):**
+```html
+<script src="https://www.paypal.com/sdk/js?client-id=SEU_CLIENT_ID&currency=BRL"></script>
+<div id="paypal-button-container"></div>
+
+<script>
+paypal.Buttons({
+  createOrder: function(data, actions) {
+    return fetch('/api/paypal/create-order', { method: 'post' })
+      .then(res => res.json())
+      .then(order => order.id);
+  },
+  onApprove: function(data, actions) {
+    return fetch(`/api/paypal/capture/${data.orderID}`, { method: 'post' })
+      .then(res => res.json())
+      .then(details => {
+        alert('Pagamento aprovado!');
+      });
+  }
+}).render('#paypal-button-container');
+</script>
+```
+
+**Recursos:**
+- Documentação: https://developer.paypal.com/docs/
+- SDK Node.js: https://github.com/paypal/Checkout-NodeJS-SDK
+
+**Taxas PayPal:**
+- Nacional: ~4,99% + R$ 0,60
+- Internacional: ~6,40% + taxa fixa
+
+---
+
+### 1.2 💚 Integração com PicPay
+
+**Status:** Interface criada, integração pendente
+
+**Como configurar:**
+1. Criar conta: https://empresas.picpay.com
+2. Solicitar credenciais de e-commerce
+3. Receber PicPay Token e Seller Token
+
+**Implementação:**
+
+```javascript
+const axios = require('axios');
+
+const PICPAY_TOKEN = 'SEU_PICPAY_TOKEN';
+const SELLER_TOKEN = 'SEU_SELLER_TOKEN';
+
+// Criar pagamento
+async function createPicPayPayment() {
+  const referenceId = `pedido_${Date.now()}`;
+  
+  const payment = {
+    referenceId: referenceId,
+    callbackUrl: 'https://seusite.com/callback',
+    returnUrl: 'https://seusite.com/sucesso',
+    value: 29.99,
+    buyer: {
+      firstName: 'João',
+      lastName: 'Silva',
+      document: '12345678909',
+      email: 'joao@email.com',
+      phone: '+5588997640012'
+    }
+  };
+
+  const response = await axios.post(
+    'https://appws.picpay.com/ecommerce/public/payments',
+    payment,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-picpay-token': PICPAY_TOKEN
+      }
+    }
+  );
+
+  return response.data.paymentUrl;
+}
+
+// Webhook para receber notificações
+app.post('/callback/picpay', async (req, res) => {
+  const { referenceId, authorizationId } = req.body;
+  
+  // Consultar status do pagamento
+  const status = await axios.get(
+    `https://appws.picpay.com/ecommerce/public/payments/${referenceId}/status`,
+    {
+      headers: {
+        'x-picpay-token': PICPAY_TOKEN
+      }
+    }
+  );
+
+  if (status.data.status === 'paid') {
+    // Pagamento aprovado - liberar acesso
+    console.log('Pagamento PicPay aprovado!');
+  }
+
+  res.status(200).send('OK');
+});
+```
+
+**Recursos:**
+- Documentação: https://ecommerce.picpay.com/doc/
+
+**Taxas PicPay:**
+- Varia conforme volume (negociável)
+- Cashback para o cliente
+
+---
+
+### 1.3 💜 Receber via Nubank (PIX)
+
+**Status:** Recomendado para começar
+
+**Configuração:**
+Nubank não tem API pública para e-commerce, mas você pode:
+
+1. **Usar PIX via Mercado Pago** (Mercado Pago aceita Nubank)
+2. **Chave PIX manual:**
+   - Configure sua chave PIX no app Nubank
+   - Use a chave em outros gateways (Mercado Pago, Stripe, etc.)
+   - Recebimentos caem na conta Nubank
+
+**Vantagens:**
+- ✅ Sem taxas para receber PIX
+- ✅ Conta gratuita
+- ✅ App excelente
+
+---
+
+### 1.4 🏦 Receber via Bancos Tradicionais
+
+**Itaú, Bradesco, Banco do Brasil, Caixa, Santander**
+
+**Opção 1: PIX via Gateway**
+Use Mercado Pago ou outro gateway que gera PIX. O dinheiro cai na sua conta do banco.
+
+**Opção 2: API do Banco (Avançado)**
+Bancos tradicionais oferecem APIs para empresas:
+
+- **Itaú:** https://developer.itau.com.br/
+- **Bradesco:** https://developers.bradesco.com.br/
+- **Banco do Brasil:** https://developers.bb.com.br/
+- **Santander:** https://developer.santander.com.br/
+
+**Requisitos:**
+- Conta PJ (Pessoa Jurídica)
+- Contrato com o banco
+- Certificado digital
+- Integração complexa
+
+**Recomendação:** Para começar, use Mercado Pago + conta do banco. Quando crescer, considere API direta.
+
+---
+
+### 1.5 📄 Boleto Bancário
+
+**Via Mercado Pago (mais fácil):**
+```javascript
+const payment = {
+  transaction_amount: 29.99,
+  description: 'Plano Autônomo',
+  payment_method_id: 'bolbradesco', // ou 'boletobancario'
+  payer: {
+    email: 'cliente@email.com',
+    first_name: 'João',
+    last_name: 'Silva',
+    identification: {
+      type: 'CPF',
+      number: '12345678909'
+    }
+  }
+};
+
+mercadopago.payment.create(payment)
+  .then(response => {
+    const boletoUrl = response.body.transaction_details.external_resource_url;
+    const barcode = response.body.barcode.content;
+  });
+```
+
+**Via Banco Direto:**
+Requer integração específica com cada banco.
+
+---
+
 ### 2. Reconhecimento Facial
 
 **Status Atual:** Apenas exemplo visual (botões simulados)
