@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
 # ZeroAtraso - Gestão de Negócios e Compras Seguras
 
 ## Visão Geral
@@ -168,4 +168,4 @@ O projeto foi desenvolvido como um exercício prático para demonstrar a criaç�
 
 ## Contato
 Para mais informações, entre em contato através do email [melhormais12@gmail.com](mailto:melhormais12@gmail.com) ou WhatsApp +55 (88) 9.9764-0012.
->>>>>>> ac76235caffd8fae44d03c1c675f308e42833026
+ac76235caffd8fae44d03c1c675f308e42833026
